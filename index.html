@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPE Practice Tool — Elsa Perez, PhD</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:#F3F4F6;color:#1F2937;font-size:15px;line-height:1.6}
+header{background:linear-gradient(135deg,#00263A 0%,#003F6B 70%);color:#fff;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-40px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(107,114,128,.1);pointer-events:none}
+.hi{max-width:1140px;margin:0 auto;padding:1.75rem 2rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
+.hl{flex:1;min-width:260px}
+.ul{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.ul-logo{background:#6B7280;color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;padding:5px 11px;border-radius:6px}
+.ul-name{font-size:13px;color:rgba(255,255,255,.65);line-height:1.3}
+.ul-name strong{color:#fff;display:block;font-size:13.5px}
+h1.st{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.ss{font-size:13px;color:rgba(255,255,255,.7)}
+.pcard{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:.7rem 1rem}
+.pn{font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff;font-weight:600}
+.pm{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px}
+.gl{height:3px;background:linear-gradient(90deg,#6B7280,#D1D5DB,transparent)}
+.topnav{background:#00263A;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.topnav-inner{max-width:1140px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.tnb{padding:.7rem 1rem;color:rgba(255,255,255,.6);font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s}
+.tnb:hover{color:#fff;background:rgba(255,255,255,.05)}
+.tnb.on{color:#D1D5DB;border-bottom-color:#6B7280}
+.wrap{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.pg{display:none}.pg.on{display:block}
+.card{background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 12px rgba(0,38,58,.09)}
+.ct{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:#00263A;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.ci{width:28px;height:28px;background:#F3F4F6;border:1px solid #D1D5DB;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:1.5rem}
+.metric{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.2rem;box-shadow:0 2px 12px rgba(0,38,58,.09);border-top:3px solid #00263A}
+.mn{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:#00263A}
+.ml{font-size:12.5px;color:#6B7280;margin-top:3px}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.bn{background:#00263A;color:#fff}.bg{background:#6B7280;color:#fff}
+.bgl{background:#D1FAE5;color:#065F46}.bal{background:#FEF3C7;color:#92400E}.brl{background:#FEE2E2;color:#991B1B}
+.itabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.itab{padding:6px 14px;border:1px solid #E5E7EB;border-radius:20px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;color:#6B7280;transition:all .15s;font-family:'Source Sans 3',sans-serif}
+.itab:hover{border-color:#00263A;color:#00263A}
+.itab.on{background:#00263A;color:#fff;border-color:#00263A}
+.pc2{background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 12px rgba(0,38,58,.09)}
+.ph{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid #E5E7EB}
+.ptitle{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:#00263A}
+.abox{background:#F3F4F6;border:1px solid #D1D5DB;border-radius:10px;padding:1rem;margin:1rem 0}
+.albl{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.6rem}
+.abtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.aspk{font-size:12px;color:#065F46;margin-top:.5rem;font-style:italic;font-weight:600}
+.aspeed{display:flex;align-items:center;gap:8px;margin-top:.6rem}
+.aspeed label{font-size:12px;color:#6B7280}
+.aspeed input{flex:1;max-width:120px}
+.aspeed span{font-size:12px;font-weight:600;color:#00263A;min-width:30px}
+.tbox{background:#00263A;color:#fff;border-radius:10px;padding:.75rem 1.25rem;display:inline-flex;align-items:center;gap:14px;margin:.75rem 0}
+.tdisp{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;min-width:60px}
+.tlbl{font-size:11px;color:rgba(255,255,255,.65)}
+.trun{background:#065F46}.twarn{background:#92400E}.tdone{background:#991B1B}
+.doc{background:#FAFAFA;border:1px solid #D1D5DB;border-left:4px solid #00263A;border-radius:0 10px 10px 0;padding:1.25rem;margin:1rem 0;font-size:14px;line-height:1.8;color:#1F2937}
+.doc.blur{filter:blur(4px);user-select:none}
+.court-doc{background:#fff;border:2px solid #1F2937;border-radius:4px;padding:2rem 2.5rem;margin:1rem 0;font-family:Georgia,serif;font-size:14px;line-height:1.9;color:#1F2937;position:relative;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.court-doc.blur{filter:blur(5px);user-select:none}
+.court-doc-header{text-align:center;border-bottom:2px solid #1F2937;margin-bottom:1.5rem;padding-bottom:1rem}
+.court-doc-court{font-size:13px;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.25rem}
+.court-doc-title{font-size:16px;font-weight:bold;text-transform:uppercase;letter-spacing:.06em;margin:.5rem 0}
+.court-doc-case{font-size:13px;margin:.25rem 0}
+.court-doc-body{font-size:14px;line-height:1.95;color:#1F2937}
+.court-doc-body p{margin-bottom:.75rem;text-align:justify}
+.court-doc-body .indent{padding-left:2rem}
+.court-doc-body .center{text-align:center}
+.court-doc-body .bold{font-weight:bold}
+.court-doc-footer{margin-top:1.5rem;border-top:1px solid #D1D5DB;padding-top:1rem;font-size:12px;color:#6B7280;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.court-doc-stamp{position:absolute;top:1.5rem;right:1.5rem;border:3px solid #003F6B;border-radius:50%;width:80px;height:80px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:bold;color:#003F6B;text-transform:uppercase;line-height:1.2;opacity:.35;transform:rotate(-15deg);letter-spacing:.03em}
+.sight-doc-panel{margin:1rem 0}
+.sight-doc-label{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#00263A;margin-bottom:.6rem;display:flex;align-items:center;gap:6px}
+.sight-doc-label::after{content:'';flex:1;height:1px;background:#D1D5DB}
+.sight-reveal-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px solid #00263A;background:#fff;color:#00263A;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Source Sans 3',sans-serif;margin-bottom:.75rem}
+.sight-reveal-btn:hover{background:#00263A;color:#fff}
+textarea.notes{width:100%;min-height:100px;border:1px solid #D1D5DB;border-radius:10px;padding:.75rem;font-size:14px;font-family:'Source Sans 3',sans-serif;resize:vertical;color:#1F2937;background:#fff}
+textarea.notes:focus{outline:none;border-color:#00263A}
+.chk{list-style:none}
+.chk li{display:flex;align-items:flex-start;gap:10px;padding:.45rem 0;border-bottom:1px solid #E5E7EB;font-size:13.5px}
+.chk li:last-child{border-bottom:none}
+.chk li input{margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:#00263A;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;border:1.5px solid #00263A;background:#fff;color:#00263A;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Source Sans 3',sans-serif}
+.btn:hover{background:#00263A;color:#fff}.btn:active{transform:scale(.97)}
+.btn-p{background:#00263A;color:#fff}.btn-p:hover{background:#003F6B;border-color:#003F6B}
+.btn-g{border-color:#6B7280;color:#6B7280}.btn-g:hover{background:#6B7280;color:#fff}
+.brow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:1rem}
+.pbar{height:5px;background:#E5E7EB;border-radius:3px;overflow:hidden;margin-top:.75rem}
+.pfill{height:100%;background:linear-gradient(90deg,#00263A,#6B7280);border-radius:3px;transition:width .35s}
+.ib{background:#F3F4F6;border-left:4px solid #00263A;border-radius:0 10px 10px 0;padding:.9rem 1rem;margin:.75rem 0;font-size:13.5px;color:#1F2937}
+.ib.gr{border-left-color:#065F46;background:#D1FAE5;color:#065F46}
+.ib.am{border-left-color:#92400E;background:#FEF3C7;color:#92400E}
+.stbl{width:100%;border-collapse:collapse;font-size:13px}
+.stbl th{background:#00263A;color:#fff;padding:.5rem .75rem;text-align:left;font-weight:500}
+.stbl td{padding:.45rem .75rem;border-bottom:1px solid #E5E7EB;vertical-align:top}
+.stbl tr:nth-child(even) td{background:#F3F4F6}
+.estage{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 12px rgba(0,38,58,.09)}
+.esh{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid #E5E7EB}
+.enum{width:36px;height:36px;background:#00263A;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.ename{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:#00263A}
+.etime{font-size:12px;color:#6B7280;margin-left:auto}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+footer{background:#00263A;color:rgba(255,255,255,.55);text-align:center;padding:1.25rem;font-size:12px}
+footer strong{color:#D1D5DB}
+@media(max-width:600px){h1.st{font-size:1.5rem}.tnb{padding:.6rem .75rem;font-size:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hi">
+    <div class="hl">
+      <div class="ul">
+        <div class="ul-logo">USU</div>
+        <div class="ul-name"><strong>Utah State University</strong>Center for Translation and Interpretation Studies</div>
+      </div>
+      <h1 class="st">OPE Practice Tool</h1>
+      <p class="ss">Oral Proficiency Examination &middot; Court Interpreter Certification &middot; Sight Translation &middot; Consecutive &middot; Simultaneous</p>
+    </div>
+    <div>
+      <div class="pcard">
+        <div class="pn">Elsa Perez, PhD</div>
+        <div class="pm">Utah State University</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="badge bg">Certified Level</span>
+          <span class="badge" style="background:rgba(255,255,255,.15);color:#fff">Utah Courts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gl"></div>
+</header>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <button class="tnb on" onclick="goTo('overview',this)">Overview</button>
+    <button class="tnb" onclick="goTo('sight',this)">Sight Translation</button>
+    <button class="tnb" onclick="goTo('consecutive',this)">Consecutive</button>
+    <button class="tnb" onclick="goTo('simultaneous',this)">Simultaneous</button>
+    <button class="tnb" onclick="goTo('mock',this)">Mock OPE Exams</button>
+    <button class="tnb" onclick="goTo('coaching',this)">Coaching &amp; Tips</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<div id="pg-overview" class="pg on">
+  <div class="metrics">
+    <div class="metric"><div class="mn">3 Parts</div><div class="ml">Sight &middot; Consecutive &middot; Simultaneous</div></div>
+    <div class="metric"><div class="mn">70%+</div><div class="ml">Required on each part independently</div></div>
+    <div class="metric"><div class="mn">Certified</div><div class="ml">Highest Utah Courts credential</div></div>
+    <div class="metric"><div class="mn">NCSC</div><div class="ml">National Center for State Courts</div></div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">📋</div>What is the OPE?</div>
+    <p style="color:#6B7280;margin-bottom:1rem">The Oral Proficiency Examination (OPE) tests your ability to perform the three core modes of court interpreting. It leads to <strong>Certified Court Interpreter</strong> status &mdash; the highest credential in Utah Courts. You must score 70%+ on <em>each</em> part independently.</p>
+    <div class="g3">
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem;border-top:3px solid #00263A"><div style="font-weight:600;color:#00263A;margin-bottom:4px;font-size:14px">Part 1 &mdash; Sight Translation</div><p style="font-size:13px;color:#6B7280">Read a written legal document and render it orally in the target language in real time. Both EN&rarr;ES and ES&rarr;EN.</p></div>
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem;border-top:3px solid #003F6B"><div style="font-weight:600;color:#00263A;margin-bottom:4px;font-size:14px">Part 2 &mdash; Consecutive</div><p style="font-size:13px;color:#6B7280">Listen to a complete utterance, take notes, then deliver the full rendition in the target language.</p></div>
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem;border-top:3px solid #6B7280"><div style="font-weight:600;color:#00263A;margin-bottom:4px;font-size:14px">Part 3 &mdash; Simultaneous</div><p style="font-size:13px;color:#6B7280">Render source language into target language in real time with minimal lag (chuchotage in court).</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">⚖️</div>Scoring criteria</div>
+    <table class="stbl">
+      <thead><tr><th>Criterion</th><th>What it means</th><th>Weight</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Completeness</strong></td><td>All content rendered &mdash; no omissions or additions</td><td><span class="badge brl">Critical</span></td></tr>
+        <tr><td><strong>Accuracy</strong></td><td>Correct meaning &mdash; no distortions or false cognates</td><td><span class="badge brl">Critical</span></td></tr>
+        <tr><td><strong>Register fidelity</strong></td><td>Speaker's register preserved exactly</td><td><span class="badge brl">Critical</span></td></tr>
+        <tr><td><strong>Fluency &amp; delivery</strong></td><td>Natural pace, clear oral delivery</td><td><span class="badge bal">Important</span></td></tr>
+        <tr><td><strong>Neutrality</strong></td><td>No editorializing or added explanations</td><td><span class="badge bal">Important</span></td></tr>
+        <tr><td><strong>Terminology</strong></td><td>Correct legal vocabulary in both languages</td><td><span class="badge bal">Important</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">🗺️</div>How to use this tool</div>
+    <div class="g2">
+      <p style="font-size:13.5px;color:#6B7280;line-height:1.8">Each practice section has <strong>10 exercises</strong> simulating the real OPE. Use the audio button to hear text at authentic pace, then practice your interpretation aloud.</p>
+      <p style="font-size:13.5px;color:#6B7280;line-height:1.8">The <strong>4 Mock OPE Exams</strong> simulate a full exam day with all three parts in sequence. Use the checklist to self-score after each part.</p>
+    </div>
+    <div class="ib am" style="margin-top:.75rem"><strong>Audio note:</strong> Uses your browser's built-in text-to-speech. Works best in Chrome or Edge. Click ▶ Play Audio on any exercise.</div>
+  </div>
+</div>
+
+<div id="pg-sight" class="pg">
+  <div style="margin-bottom:1.25rem">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#00263A;margin-bottom:.25rem">Sight Translation Practice</div>
+    <p style="font-size:13px;color:#6B7280">10 authentic court documents &mdash; 5 English&rarr;Spanish, 5 Spanish&rarr;English. Each includes a prep timer and audio.</p>
+  </div>
+  <div class="itabs" id="sight-tabs"></div>
+  <div id="sight-content"></div>
+</div>
+
+<div id="pg-consecutive" class="pg">
+  <div style="margin-bottom:1.25rem">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#00263A;margin-bottom:.25rem">Consecutive Interpretation Practice</div>
+    <p style="font-size:13px;color:#6B7280">10 courtroom scenarios. Listen to the full segment, take notes, then deliver your consecutive rendition in Spanish aloud.</p>
+  </div>
+  <div class="itabs" id="conse-tabs"></div>
+  <div id="conse-content"></div>
+</div>
+
+<div id="pg-simultaneous" class="pg">
+  <div style="margin-bottom:1.25rem">
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#00263A;margin-bottom:.25rem">Simultaneous Interpretation Practice</div>
+    <p style="font-size:13px;color:#6B7280">10 continuous courtroom passages. Press play and whisper your interpretation alongside the audio (chuchotage).</p>
+  </div>
+  <div class="itabs" id="sim-tabs"></div>
+  <div id="sim-content"></div>
+</div>
+
+<div id="pg-mock" class="pg">
+  <div style="background:linear-gradient(135deg,#00263A,#003F6B);color:#fff;border-radius:16px;padding:1.75rem;margin-bottom:1.5rem">
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.25rem">4 Full Mock OPE Examinations</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.7)">Each simulates a complete OPE with all three parts in sequence &middot; Audio included &middot; Evaluation checklist &middot; Self-scoring</div>
+  </div>
+  <div class="itabs" id="mock-tabs"></div>
+  <div id="mock-content"></div>
+</div>
+
+<div id="pg-coaching" class="pg">
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#00263A;margin-bottom:1.25rem">Coaching, Tips &amp; Reference Materials</div>
+  <div class="card">
+    <div class="ct"><div class="ci">📝</div>Note-taking symbol system for consecutive</div>
+    <table class="stbl">
+      <thead><tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&rarr;</strong></td><td>Causes / leads to</td><td>"accident &rarr; injury &rarr; lawsuit"</td></tr>
+        <tr><td><strong>&uarr; &darr;</strong></td><td>Increase / decrease</td><td>"sentence &uarr; to 5 years"</td></tr>
+        <tr><td><strong>&ne;</strong></td><td>Denial / negation</td><td>"defendant &ne; present"</td></tr>
+        <tr><td><strong>&there4;</strong></td><td>Therefore / consequently</td><td>"&there4; motion granted"</td></tr>
+        <tr><td><strong>!</strong></td><td>Important / emphasis</td><td>"! date of incident"</td></tr>
+        <tr><td><strong>Underline</strong></td><td>Must not omit</td><td>Numbers, names, dates</td></tr>
+        <tr><td><strong>Def / Pros / J</strong></td><td>Defendant / Prosecutor / Judge</td><td>Speaker identifiers</td></tr>
+      </tbody>
+    </table>
+    <div class="ib" style="margin-top:.75rem"><strong>Critical rule:</strong> Always write numbers, dates, proper names, and negations in full &mdash; never abbreviate these.</div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">⚠️</div>Most common reasons candidates fail</div>
+    <div class="g2">
+      <div>
+        <div style="font-weight:600;font-size:13px;color:#991B1B;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em">All modes</div>
+        <ul style="font-size:13.5px;color:#1F2937;line-height:2;padding-left:1.2rem">
+          <li><strong>Omissions</strong> &mdash; leaving out any content, even filler words</li>
+          <li><strong>Register breaks</strong> &mdash; changing speaker's formality level</li>
+          <li><strong>Adding explanations</strong> &mdash; interpreters do not clarify</li>
+          <li><strong>False cognates</strong> &mdash; embarrassed &ne; embarazada</li>
+          <li><strong>Number errors</strong> &mdash; double-check all figures</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:13px;color:#92400E;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em">Mode-specific</div>
+        <ul style="font-size:13.5px;color:#1F2937;line-height:2;padding-left:1.2rem">
+          <li><strong>Sight:</strong> word-for-word literal reading</li>
+          <li><strong>Sight:</strong> not completing within time limit</li>
+          <li><strong>Consecutive:</strong> starting before speaker finishes</li>
+          <li><strong>Consecutive:</strong> losing details due to poor notes</li>
+          <li><strong>Simultaneous:</strong> ear-voice span greater than 5 seconds</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">🔤</div>Essential legal vocabulary &mdash; false cognates</div>
+    <table class="stbl">
+      <thead><tr><th>English</th><th>Correct Spanish</th><th>Wrong translation</th></tr></thead>
+      <tbody>
+        <tr><td>Embarrassed</td><td>avergonzado/a</td><td>embarazada (pregnant) ❌</td></tr>
+        <tr><td>Actually</td><td>en realidad / de hecho</td><td>actualmente (currently) ❌</td></tr>
+        <tr><td>Bail</td><td>fianza / libertad bajo fianza</td><td>bola (informal only) ❌</td></tr>
+        <tr><td>Sentence (legal)</td><td>sentencia / condena</td><td>oración (grammar) ❌</td></tr>
+        <tr><td>Charge (legal)</td><td>cargo / acusación</td><td>carga (burden) ❌</td></tr>
+        <tr><td>Record (criminal)</td><td>antecedentes penales</td><td>récord ❌</td></tr>
+        <tr><td>Hearing</td><td>audiencia / vista</td><td>audición (sense of hearing) ❌</td></tr>
+        <tr><td>Complaint</td><td>denuncia / demanda</td><td>queja (informal only)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ci">🎭</div>Register guide &mdash; match the speaker exactly</div>
+    <div class="g3">
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem"><div style="font-weight:600;font-size:13px;color:#00263A;margin-bottom:6px">Judge / Formal Legal</div><p style="font-size:12.5px;color:#6B7280">Highly formal. Long sentences. Passive voice. No contractions. "Usted" always. Use: "de conformidad con," "s&iacute;rvase," "en virtud de."</p></div>
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem"><div style="font-weight:600;font-size:13px;color:#00263A;margin-bottom:6px">Attorney / Semi-formal</div><p style="font-size:12.5px;color:#6B7280">Professional but direct. May use rhetorical questions. Technical legal terms mixed with plain language. Controlled emotion.</p></div>
+      <div style="background:#F3F4F6;border-radius:10px;padding:1rem"><div style="font-weight:600;font-size:13px;color:#00263A;margin-bottom:6px">Witness / Everyday</div><p style="font-size:12.5px;color:#6B7280">Informal to colloquial. May include slang, hesitations, incomplete sentences. Reproduce exactly &mdash; do NOT correct the speaker.</p></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>Prepared by <strong>Elsa Perez, PhD</strong> &middot; Utah State University &middot; Center for Translation and Interpretation Studies &middot; NCSC OPE Guidelines &middot; Utah Courts Language Access Program</footer>
+
+<script>
+// ── NAVIGATION ──────────────────────────────────────────
+function goTo(id, btn) {
+  document.querySelectorAll('.pg').forEach(function(el) { el.classList.remove('on'); });
+  document.querySelectorAll('.tnb').forEach(function(el) { el.classList.remove('on'); });
+  document.getElementById('pg-' + id).classList.add('on');
+  if (btn) btn.classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SPEECH ──────────────────────────────────────────────
+function speak(text, lang, rate, pitch, btnId, indId) {
+  window.speechSynthesis.cancel();
+  var btn = document.getElementById(btnId);
+  var ind = document.getElementById(indId);
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || 'en-US';
+  u.rate = parseFloat(rate) || 0.85;
+  u.pitch = parseFloat(pitch) || 1.0;
+  if (btn) btn.textContent = '\u25A0 Stop';
+  if (ind) ind.style.display = 'block';
+  u.onend = u.onerror = function() {
+    if (btn) btn.textContent = '\u25B6 Play Audio';
+    if (ind) ind.style.display = 'none';
+  };
+  window.speechSynthesis.speak(u);
+}
+function stopAll() { window.speechSynthesis.cancel(); }
+function toggleBlur(id) { var el = document.getElementById(id); if (el) el.classList.toggle('blur'); }
+function updateSpeedLabel(sliderId, labelId) {
+  var s = document.getElementById(sliderId);
+  var l = document.getElementById(labelId);
+  if (s && l) l.textContent = parseFloat(s.value).toFixed(2);
+}
+
+// ── TIMERS ──────────────────────────────────────────────
+var TIMERS = {};
+function startTimer(id, secs) {
+  if (TIMERS[id]) { clearInterval(TIMERS[id]); }
+  var rem = secs;
+  function tick() {
+    var box = document.getElementById('tb-' + id);
+    var disp = document.getElementById('td-' + id);
+    var lbl = document.getElementById('tl-' + id);
+    if (!disp) { clearInterval(TIMERS[id]); return; }
+    var m = String(Math.floor(rem / 60)).padStart(2, '0');
+    var s = String(rem % 60).padStart(2, '0');
+    disp.textContent = m + ':' + s;
+    if (rem <= 0) {
+      clearInterval(TIMERS[id]);
+      if (box) box.className = 'tbox tdone';
+      if (lbl) lbl.textContent = "Time's up \u2014 begin interpreting";
+      return;
+    }
+    if (rem <= 10 && box) box.className = 'tbox twarn';
+    else if (box) box.className = 'tbox trun';
+    rem--;
+  }
+  tick();
+  TIMERS[id] = setInterval(tick, 1000);
+}
+function resetTimer(id, secs) {
+  if (TIMERS[id]) { clearInterval(TIMERS[id]); delete TIMERS[id]; }
+  var box = document.getElementById('tb-' + id);
+  var disp = document.getElementById('td-' + id);
+  var lbl = document.getElementById('tl-' + id);
+  var m = String(Math.floor(secs / 60)).padStart(2, '0');
+  var s = String(secs % 60).padStart(2, '0');
+  if (box) box.className = 'tbox';
+  if (disp) disp.textContent = m + ':' + s;
+  if (lbl) lbl.textContent = 'Click Start to begin';
+}
+
+// ── DATA ────────────────────────────────────────────────
+var SD = [
+  { id: 'S0', dir: 'EN\u2192ES', title: 'Miranda Warning', type: 'Rights Advisement', lang: 'en-US', rate: 0.82, pitch: 1.0, spk: 'Law enforcement officer \u2014 formal, measured',
+    text: 'You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed for you. Do you understand each of these rights I have explained to you? Having these rights in mind, do you wish to talk to us now?',
+    tip: 'Do not say "corte de ley" \u2014 use "tribunal." "Appointed" = "nombrado de oficio." Maintain formal, official register throughout.' },
+  { id: 'S1', dir: 'EN\u2192ES', title: 'Plea Advisement', type: 'Court Proceeding', lang: 'en-US', rate: 0.80, pitch: 1.05, spk: 'Judge \u2014 formal, deliberate',
+    text: 'Before accepting your plea, the Court must advise you of certain rights. You have the right to a trial by jury, the right to confront and cross-examine witnesses against you, and the right against self-incrimination. By entering a guilty plea, you are waiving these rights. Do you understand that by pleading guilty, you give up your right to a trial?',
+    tip: '"Plea" = "declaraci\u00f3n de culpabilidad." "Waiving" = "renunciando a." "Self-incrimination" = "autoincriminaci\u00f3n." Elevated judicial register \u2014 no contractions.' },
+  { id: 'S2', dir: 'EN\u2192ES', title: 'Protective Order', type: 'Civil Court Document', lang: 'en-US', rate: 0.85, pitch: 0.95, spk: 'Clerk \u2014 neutral, official',
+    text: 'This is a civil protective order issued by the Third District Court of Utah. You are hereby ordered to have no contact with the protected person, either directly or indirectly, including through third parties, electronic communication, or social media. You must vacate the shared residence within twenty-four hours of service of this order. Violation of this order is a criminal offense punishable by imprisonment.',
+    tip: '"Hereby" = "por medio de la presente." "Third parties" = "terceras personas." "Vacate" = "desocupar." "Punishable by imprisonment" = "sancionado con pena privativa de libertad."' },
+  { id: 'S3', dir: 'EN\u2192ES', title: 'Notice of Hearing', type: 'Court Notice', lang: 'en-US', rate: 0.87, pitch: 1.0, spk: 'Court clerk \u2014 neutral, administrative',
+    text: "You are hereby notified that a hearing in the above-captioned matter has been scheduled for the fourteenth day of May, at nine o'clock in the morning, in Courtroom Seven of the Utah Third District Court. Your appearance is mandatory. Failure to appear may result in a bench warrant being issued for your arrest and forfeiture of any bond posted.",
+    tip: '"Above-captioned matter" = "asunto referenciado." "Bench warrant" = "orden de arresto emitida por el tribunal." "Forfeiture of bond" = "p\u00e9rdida de la fianza."' },
+  { id: 'S4', dir: 'EN\u2192ES', title: 'Waiver of Rights', type: 'Legal Document', lang: 'en-US', rate: 0.83, pitch: 1.0, spk: 'Attorney \u2014 clear, professional',
+    text: 'I, the undersigned, hereby knowingly and voluntarily waive my right to a preliminary hearing. I understand that at a preliminary hearing, the prosecution would be required to present sufficient evidence to establish probable cause that I committed the charged offense. I make this waiver freely and without coercion, having been advised of my rights by my attorney.',
+    tip: '"Undersigned" = "el/la abajo firmante." "Knowingly and voluntarily" = "consciente y voluntariamente." "Probable cause" = "causa probable." "Without coercion" = "sin coacci\u00f3n."' },
+  { id: 'S5', dir: 'ES\u2192EN', title: 'Aviso de Audiencia', type: 'Court Notice', lang: 'es-ES', rate: 0.82, pitch: 1.0, spk: 'Official del tribunal \u2014 formal',
+    text: 'Por medio del presente documento, se le notifica a usted que la audiencia preliminar en la causa n\u00famero dos mil veinticuatro gui\u00f3n penal gui\u00f3n cero cuarenta y cinco ha sido programada para el veintid\u00f3s de agosto del a\u00f1o en curso, a las diez horas, en la Sala de Audiencias N\u00famero Tres del Tribunal de Distrito. Su comparecencia es obligatoria.',
+    tip: 'Maintain formal English court register. "Comparecencia obligatoria" = "mandatory appearance." "Apercibimiento" = "under penalty." Render the case number in English format.' },
+  { id: 'S6', dir: 'ES\u2192EN', title: 'Advertencia de Derechos', type: 'Rights Advisement', lang: 'es-ES', rate: 0.80, pitch: 1.05, spk: 'Police officer \u2014 formal, official',
+    text: 'Usted tiene el derecho de guardar silencio. Todo lo que diga puede ser usado en su contra ante un tribunal de justicia. Usted tiene el derecho de ser representado por un abogado. Si no puede pagar los honorarios de un abogado, el tribunal le nombrar\u00e1 uno de oficio. \u00bfComprende usted cada uno de estos derechos que le he explicado?',
+    tip: 'This is the Miranda warning in Spanish \u2014 render into standard English legal language. "De oficio" = "appointed by the court / public defender." Use established phrasing.' },
+  { id: 'S7', dir: 'ES\u2192EN', title: 'Orden de Protecci\u00f3n', type: 'Civil Court Document', lang: 'es-ES', rate: 0.83, pitch: 0.95, spk: 'Judge \u2014 formal, deliberate',
+    text: 'Por medio de la presente resoluci\u00f3n judicial, se ordena al demandado que cese de inmediato todo tipo de contacto con la parte protegida, ya sea en persona, por v\u00eda telef\u00f3nica, electr\u00f3nica, o a trav\u00e9s de terceros. Asimismo, se le ordena desocupar el domicilio compartido en un plazo no mayor de cuarenta y ocho horas contadas a partir de la notificaci\u00f3n de esta resoluci\u00f3n.',
+    tip: '"Resoluci\u00f3n judicial" = "court order." "Cese de inmediato" = "immediately cease." "En un plazo no mayor de" = "within no more than." "Contadas a partir de" = "from the date of."' },
+  { id: 'S8', dir: 'ES\u2192EN', title: 'Renuncia a Audiencia Preliminar', type: 'Legal Document', lang: 'es-ES', rate: 0.85, pitch: 1.0, spk: 'Attorney \u2014 professional',
+    text: 'Yo, el/la abajo firmante, renuncio voluntaria y conscientemente a mi derecho a una audiencia preliminar. Entiendo que en dicha audiencia el ministerio p\u00fablico tendr\u00eda la obligaci\u00f3n de presentar pruebas suficientes para establecer que existe causa probable de que comet\u00ed el delito que se me imputa. Realizo esta renuncia de manera libre y sin ning\u00fan tipo de coacci\u00f3n.',
+    tip: '"Ministerio p\u00fablico" = "prosecution / district attorney." "Se me imputa" = "with which I am charged." "Sin ning\u00fan tipo de coacci\u00f3n" = "without any form of coercion."' },
+  { id: 'S9', dir: 'ES\u2192EN', title: 'Declaraci\u00f3n de Culpabilidad', type: 'Plea Agreement', lang: 'es-ES', rate: 0.80, pitch: 1.05, spk: 'Judge \u2014 formal, measured',
+    text: 'El tribunal ha recibido su declaraci\u00f3n de culpabilidad por el cargo de robo en segundo grado. Antes de aceptar su declaraci\u00f3n, el tribunal debe cerciorarse de que usted comprende las consecuencias de su plea. Al declararse culpable, usted renuncia a su derecho a un juicio con jurado, a su derecho a confrontar a los testigos en su contra, y a su derecho a no autoincriminarse.',
+    tip: '"Declaraci\u00f3n de culpabilidad" = "guilty plea." "Robo en segundo grado" = "second-degree robbery." "Cerciorarse" = "ensure / ascertain." Preserve all three rights listed.' }
+];
+
+var CD = [
+  { id: 'C0', title: 'Direct Examination \u2014 Arresting Officer', type: 'Criminal Case', lang: 'en-US', rate: 0.85, pitch: 1.1, spk: 'Prosecutor \u2014 professional, methodical',
+    text: "Officer Davis, you responded to the scene on the night in question, correct? What time did you arrive? What did you observe when you arrived? Did you speak with the defendant? What did he say to you at that time? Did you advise him of his Miranda rights at that point?",
+    tip: 'Each question must be complete and accurate. In real exam conditions the attorney pauses between questions \u2014 interpret each before the next begins.' },
+  { id: 'C1', title: 'Witness Testimony \u2014 Victim Statement', type: 'Criminal Case', lang: 'en-US', rate: 0.82, pitch: 0.95, spk: 'Witness \u2014 emotional, informal register',
+    text: "He just came out of nowhere, I swear. I was walking to my car, it was around eleven at night, and he grabbed my purse. I tried to hold on and he shoved me to the ground. I hit my head on the curb. I was scared, I couldn't even scream. He ran towards Fifth Street and disappeared around the corner.",
+    tip: 'CRITICAL: Preserve the informal, emotional register. Do NOT polish or formalize. "I swear" = "lo juro." "Shoved" = "me empuj\u00f3." Reproduce hesitations in Spanish equivalents.' },
+  { id: 'C2', title: 'Cross-Examination \u2014 Alibi Witness', type: 'Criminal Case', lang: 'en-US', rate: 0.88, pitch: 1.05, spk: 'Defense attorney \u2014 firm, probing',
+    text: "You testified that you were with the defendant on the night in question. Is that correct? And you are the defendant's cousin, correct? How often do you see the defendant? Did anyone else see you both together that evening? You did not report this to police at the time, did you? Why did you wait six months to come forward with this information?",
+    tip: 'Rapid question-answer format \u2014 stay focused and sequential. Do not blend questions together. Maintain the attorney\'s firm, skeptical tone in your Spanish rendition.' },
+  { id: 'C3', title: 'Judge \u2014 Sentencing Remarks', type: 'Sentencing Hearing', lang: 'en-US', rate: 0.78, pitch: 0.9, spk: 'Judge \u2014 formal, deliberate, authoritative',
+    text: "Mr. Ramirez, you have been found guilty by a jury of your peers of one count of assault in the second degree. The Court has reviewed the presentence report and considered the arguments of counsel. Given the nature of this offense, your prior criminal history, and the impact on the victim, this Court sentences you to three years in the Utah State Prison, with credit for time already served.",
+    tip: 'Judicial register \u2014 elevated, formal, impersonal. "Jury of peers" = "jurado de sus iguales." "Presentence report" = "informe pre-sentencia." "Credit for time served" = "con abono del tiempo en prisi\u00f3n preventiva."' },
+  { id: 'C4', title: 'Expert Witness \u2014 Civil Case', type: 'Civil Case', lang: 'en-US', rate: 0.83, pitch: 1.0, spk: 'Attorney questioning expert \u2014 professional',
+    text: "Please describe your professional qualifications for the Court. In your expert opinion, what was the cause of the plaintiff's injuries? Based on your review of the medical records, are these injuries consistent with the accident described? How long would you estimate the recovery period to be? Will the plaintiff experience any permanent disability as a result of these injuries?",
+    tip: '"Plaintiff" = "demandante." "Consistent with" = "consistentes con." "Recovery period" = "per\u00edodo de recuperaci\u00f3n." "Permanent disability" = "incapacidad permanente."' },
+  { id: 'C5', title: 'Defendant Allocution', type: 'Sentencing Hearing', lang: 'en-US', rate: 0.80, pitch: 0.95, spk: 'Defendant \u2014 informal, remorseful, nervous',
+    text: "Your Honor, I just want to say I'm sorry. I know what I did was wrong and I take full responsibility. I wasn't thinking straight that night. I have a family depending on me. My kids need me. I've never been in trouble before this. I promise I will never be back in this courtroom again. I'm asking for mercy.",
+    tip: 'CRITICAL: Preserve the informal, vulnerable register. "I wasn\'t thinking straight" = "no estaba pensando con claridad." "Asking for mercy" = "pidiendo clemencia." Do not elevate the register.' },
+  { id: 'C6', title: 'Child Witness Testimony', type: 'Family Court', lang: 'en-US', rate: 0.90, pitch: 1.3, spk: 'Child witness (age ~10) \u2014 simple, scared',
+    text: "He yells a lot. At night mostly. Sometimes he throws things. One time he hit mom and she cried. I was in my room but I could hear everything. I'm scared when he gets angry. I don't want to go home. Can I stay with grandma?",
+    tip: 'CRITICAL REGISTER: Child speaking. Use simple, child-appropriate Spanish. Do NOT use adult structures or formal vocabulary. "He yells" = "grita mucho." Preserve the emotional fragility.' },
+  { id: 'C7', title: 'Immigration Direct Examination', type: 'Immigration Hearing', lang: 'en-US', rate: 0.85, pitch: 1.0, spk: 'Immigration attorney \u2014 calm, supportive',
+    text: "When did you first receive threats from this group? How many times were you threatened? Did you report these threats to local police? What happened when you reported them? Why do you believe the government cannot protect you? When did you make the decision to leave your country? How did you travel to the United States?",
+    tip: '"Country of origin" = "pa\u00eds de origen." "Permanent residents" = "residentes permanentes." Immigration hearings require precise terminology \u2014 errors can have life-altering consequences.' },
+  { id: 'C8', title: 'Prosecutor Closing Argument', type: 'Criminal Trial', lang: 'en-US', rate: 0.87, pitch: 1.05, spk: 'Prosecutor \u2014 passionate, formal, persuasive',
+    text: "Ladies and gentlemen of the jury, the evidence presented in this case is overwhelming. The defendant was identified by three separate eyewitnesses. His fingerprints were found at the scene. His own cell phone placed him at the location at the time of the crime. The defense has offered no credible alternative explanation. The People ask you to return a verdict of guilty on all counts.",
+    tip: '"Ladies and gentlemen of the jury" = "se\u00f1oras y se\u00f1ores del jurado." "Overwhelming evidence" = "pruebas contundentes." "Return a verdict" = "emitir un veredicto."' },
+  { id: 'C9', title: 'Victim Impact Statement', type: 'Sentencing Hearing', lang: 'en-US', rate: 0.77, pitch: 0.88, spk: 'Victim \u2014 emotionally raw, pauses, informal',
+    text: "This has changed my life completely. I used to feel safe in my own neighborhood. I can't sleep anymore. I have nightmares. I lost my job because I couldn't focus. My kids see me struggling and that kills me. I want the court to understand. This isn't just a case number. This happened to a real person. To me. And I will carry this for the rest of my life.",
+    tip: 'Emotionally demanding. Pauses and fragmented sentences must be reproduced in Spanish. Do NOT smooth it out. "That kills me" = "eso me destrozó." Use a subdued, heavy tone.' }
+];
+
+var SIMD = [
+  { id: 'SI0', title: 'Arraignment Proceeding', type: 'Criminal Case', lang: 'en-US', rate: 0.82, pitch: 0.9, spk: 'Judge \u2014 formal, official, measured pace',
+    text: 'The Court calls case number 2024-CR-00412, State of Utah versus Diego Hernandez. Mr. Hernandez, you are charged with one count of aggravated assault, a third-degree felony, and one count of criminal mischief, a class B misdemeanor. How do you plead to count one, aggravated assault? How do you plead to count two, criminal mischief? The Court notes your pleas of not guilty on both counts. Bail is set at ten thousand dollars.',
+    tip: '"Aggravated assault" = "agresi\u00f3n agravada." "Class B misdemeanor" = "delito menor clase B." Keep up with the judge \u2014 do not fall more than 5 seconds behind.' },
+  { id: 'SI1', title: 'Bail Hearing \u2014 Prosecution', type: 'Criminal Case', lang: 'en-US', rate: 0.87, pitch: 1.05, spk: 'Prosecutor \u2014 professional, assertive',
+    text: 'Your Honor, the People request that bail be denied or set at a substantial amount. The defendant has a prior conviction for a similar offense and has failed to appear for court dates on two prior occasions. He has ties to another country and significant resources that would allow him to flee the jurisdiction. The People ask that the Court detain the defendant pending trial.',
+    tip: '"Failed to appear" = "no compareci\u00f3." "Flee the jurisdiction" = "huir de la jurisdicci\u00f3n." "Detain the defendant pending trial" = "detener al acusado en espera del juicio."' },
+  { id: 'SI2', title: 'Bail Hearing \u2014 Defense', type: 'Criminal Case', lang: 'en-US', rate: 0.85, pitch: 1.0, spk: 'Defense attorney \u2014 persuasive, professional',
+    text: "Your Honor, my client has lived in this community for fifteen years. He has a stable job, a home, and three children who are U.S. citizens. The prior failure to appear was due to a documented medical emergency. My client poses no flight risk and no danger to the community. We request that he be released on his own recognizance, or in the alternative, on a minimal bail.",
+    tip: '"Released on his own recognizance" = "puesto en libertad bajo su propia responsabilidad" (OR "bajo palabra"). "Minimal bail" = "fianza m\u00ednima."' },
+  { id: 'SI3', title: 'Jury Instructions', type: 'Criminal Trial', lang: 'en-US', rate: 0.78, pitch: 0.88, spk: 'Judge instructing jury \u2014 slow, deliberate, formal',
+    text: 'Ladies and gentlemen of the jury, you are about to begin your deliberations. You must base your verdict solely on the evidence presented during trial and the law as I have explained it to you. You are the sole judges of the credibility of the witnesses. The defendant is presumed innocent until proven guilty beyond a reasonable doubt. This is the highest standard of proof in our legal system.',
+    tip: '"Beyond a reasonable doubt" = "m\u00e1s all\u00e1 de toda duda razonable." "Credibility of witnesses" = "credibilidad de los testigos." "Presumed innocent" = "se presume inocente."' },
+  { id: 'SI4', title: 'Sentencing \u2014 Judge Ruling', type: 'Sentencing', lang: 'en-US', rate: 0.80, pitch: 0.9, spk: 'Judge \u2014 authoritative, measured, formal',
+    text: "This Court has reviewed the presentence report, the letters submitted on behalf of the defendant, and the victim impact statements. The offense is serious. It involved planning and caused significant harm to an individual who trusted the defendant. The Court sentences the defendant to four years in the Utah State Correctional Facility, with the possibility of parole after thirty months.",
+    tip: '"Possibility of parole" = "posibilidad de libertad condicional." "Correctional facility" = "centro correccional." Dense judicial passage \u2014 practice chunking it mentally.' },
+  { id: 'SI5', title: 'Rights Advisement \u2014 Plea Hearing', type: 'Plea Hearing', lang: 'en-US', rate: 0.80, pitch: 1.0, spk: 'Judge \u2014 formal, ensuring understanding',
+    text: 'Before the Court can accept your plea, I need to advise you of the rights you are giving up. First, you have the right to a trial by jury of twelve of your peers. Second, you have the right to confront and cross-examine the witnesses against you. Third, you have the right to present your own witnesses and evidence. Fourth, you have the right against self-incrimination. Do you understand all of these rights?',
+    tip: 'The numbered list must be preserved exactly in Spanish. Do not combine rights or change their order. "Confront and cross-examine" = "confrontar e interrogar." End with the yes/no questions.' },
+  { id: 'SI6', title: 'Emergency Motion Hearing', type: 'Civil Case', lang: 'en-US', rate: 0.90, pitch: 1.1, spk: 'Attorney \u2014 urgent, professional, rapid pace',
+    text: 'Your Honor, we are requesting an emergency temporary restraining order. My client was served this morning with papers indicating that the opposing party intends to remove assets from the marital estate before the scheduled property division hearing. The assets include a jointly-owned property valued at approximately four hundred thousand dollars. We ask the Court to act immediately.',
+    tip: 'Deliberately faster pace. "Temporary restraining order" = "orden de restricci\u00f3n temporal." "Marital estate" = "patrimonio conyugal." "Irreparable harm" = "da\u00f1o irreparable."' },
+  { id: 'SI7', title: 'Defense Closing Argument', type: 'Criminal Trial', lang: 'en-US', rate: 0.87, pitch: 1.0, spk: 'Defense attorney \u2014 passionate, formal',
+    text: "The prosecution has asked you to convict my client based on the testimony of witnesses who could not agree on basic facts. One witness said it was dark. Another said there was a streetlight. One said the perpetrator was wearing a blue jacket. Another said it was black. Ladies and gentlemen, this is not proof beyond a reasonable doubt. This is confusion, this is contradiction, and this is exactly why we have the presumption of innocence.",
+    tip: 'Closing arguments have rhetorical rhythm \u2014 try to maintain it in Spanish. Note the contrast between specific details and the broad legal principle. Both must come through clearly.' },
+  { id: 'SI8', title: 'Immigration Judge \u2014 Ruling', type: 'Immigration Hearing', lang: 'en-US', rate: 0.80, pitch: 0.9, spk: 'Immigration judge \u2014 formal, authoritative',
+    text: "This Court has reviewed the application for asylum submitted by the respondent, along with the supporting documentation and testimony. The Court finds the respondent's testimony credible and consistent with country condition evidence. The Court grants the respondent's application for asylum. The respondent is reminded to report any change of address to the Court and to USCIS within ten days.",
+    tip: '"Respondent" = "solicitante" in immigration. "Asylum" = "asilo." "Country condition evidence" = "evidencia sobre las condiciones del pa\u00eds." "USCIS" \u2014 do not translate the acronym.' },
+  { id: 'SI9', title: 'Family Court \u2014 Custody Order', type: 'Family Court', lang: 'en-US', rate: 0.82, pitch: 1.0, spk: 'Judge \u2014 formal, child-centered',
+    text: "The Court awards joint legal custody to both parties, with primary physical custody to the mother. The father shall have parenting time every other weekend, from Friday evening at six o'clock until Sunday evening at six o'clock, plus one evening per week. Child support is set at eight hundred and fifty dollars per month. Both parties are ordered to attend co-parenting counseling within sixty days.",
+    tip: '"Joint legal custody" = "custodia legal compartida." "Parenting time" = "tiempo de convivencia." "Co-parenting counseling" = "consejer\u00eda de coparentalidad."' }
+];
+
+var MOCKS = [
+  { title: 'Mock Exam 1 \u2014 Criminal Case', ctx: 'Armed robbery case. Defendant is a native Spanish speaker with limited English.',
+    sight: [
+      { dir: 'EN\u2192ES', title: 'Miranda Warning', lang: 'en-US', rate: 0.82, pitch: 1.0, spk: 'Police officer \u2014 official, firm',
+        text: 'You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed for you. Do you understand these rights?' },
+      { dir: 'ES\u2192EN', title: 'Carta de Derechos', lang: 'es-ES', rate: 0.82, pitch: 1.0, spk: 'Clerk \u2014 formal, official',
+        text: 'Usted tiene derecho a que se le informe de los cargos que se le imputan. Tiene derecho a ser representado por un abogado en todas las etapas del proceso. Si no puede costear los servicios de un abogado, el tribunal le asignar\u00e1 uno de oficio.' }
+    ],
+    conse: [
+      { title: 'Direct Examination \u2014 Arresting Officer', lang: 'en-US', rate: 0.85, pitch: 1.05, spk: 'Prosecutor \u2014 professional',
+        text: "Officer Davis, you responded to the scene on the night in question, correct? What time did you arrive? What did you observe? Did you speak with the defendant? What did he say? Did you advise him of his Miranda rights?" },
+      { title: 'Defendant Testimony', lang: 'en-US', rate: 0.83, pitch: 0.95, spk: 'Defendant \u2014 nervous, informal',
+        text: "I wasn't even there. I was at my brother's house the whole night. We were watching a game. I left around midnight. I don't know why they're saying it was me. I've never been in trouble before. I have a job. I have kids." }
+    ],
+    sim: [
+      { title: 'Arraignment \u2014 Judge Opening', lang: 'en-US', rate: 0.80, pitch: 0.9, spk: 'Judge \u2014 formal, deliberate',
+        text: 'This Court calls case number 2024 CR dash 00891, State of Utah versus Marco Antonio Vargas. Mr. Vargas, you are charged with one count of aggravated robbery, a first-degree felony. The maximum penalty for this offense is fifteen years in the Utah State Prison. You are entitled to be represented by counsel at all stages of this proceeding. How do you wish to enter your plea at this time?' }
+    ]
+  },
+  { title: 'Mock Exam 2 \u2014 Family Court', ctx: 'Custody dispute and domestic violence protective order.',
+    sight: [
+      { dir: 'EN\u2192ES', title: 'Temporary Protective Order', lang: 'en-US', rate: 0.82, pitch: 0.9, spk: 'Judge reading order \u2014 formal',
+        text: 'This temporary protective order is hereby issued against the respondent. You are ordered to have no contact with the petitioner or the minor children except as provided in the supervised visitation schedule. You must vacate the family residence within twenty-four hours. Violation of this order is a class A misdemeanor.' },
+      { dir: 'ES\u2192EN', title: 'Declaraci\u00f3n Jurada de la V\u00edctima', lang: 'es-ES', rate: 0.80, pitch: 0.95, spk: 'Petitioner \u2014 emotional, urgent',
+        text: 'Declaro bajo juramento que el d\u00eda dieciocho de septiembre, mi esposo lleg\u00f3 al domicilio en estado de ebriedad y procedi\u00f3 a golpearme en el rostro en dos ocasiones frente a nuestros hijos. Tengo miedo por mi seguridad y la de mis hijos. Solicito al tribunal que tome medidas urgentes para protegernos.' }
+    ],
+    conse: [
+      { title: 'Mother \u2014 Direct Examination', lang: 'en-US', rate: 0.85, pitch: 1.0, spk: "Petitioner's attorney \u2014 calm, methodical",
+        text: 'How long have you been married to the respondent? Can you describe the incident that occurred on September eighteenth? Where were your children during this incident? Has this happened before? Have you reported previous incidents to the police? What are you asking the Court to do today?' },
+      { title: 'Social Worker \u2014 Expert Testimony', lang: 'en-US', rate: 0.83, pitch: 1.0, spk: 'Expert witness \u2014 professional, measured',
+        text: 'I am a licensed clinical social worker with fifteen years of experience in child welfare and domestic violence cases. I conducted home visits on three separate occasions. The children showed signs of anxiety and fear. In my professional opinion, unsupervised contact between the father and children at this time would pose a risk to their emotional and physical wellbeing.' }
+    ],
+    sim: [
+      { title: 'Family Court \u2014 Judge Ruling', lang: 'en-US', rate: 0.78, pitch: 0.88, spk: 'Judge \u2014 authoritative, measured',
+        text: "The Court has heard extensive testimony and reviewed all submitted evidence. The Court finds the petitioner's account credible. The Court grants the petition for a civil protective order for a period of one hundred and eighty days. Custody of the minor children is awarded to the mother, with supervised visitation for the father to be coordinated through the Court's family services program." }
+    ]
+  },
+  { title: 'Mock Exam 3 \u2014 Immigration Hearing', ctx: 'Asylum hearing. Applicant fled violence in Central America.',
+    sight: [
+      { dir: 'EN\u2192ES', title: 'Notice to Appear', lang: 'en-US', rate: 0.82, pitch: 1.0, spk: 'Immigration officer \u2014 formal, official',
+        text: 'You are ordered to appear before an immigration judge of the United States Department of Justice. The charges against you are as follows: You are an alien who is present in the United States without being admitted or paroled. You entered the United States at or near an unknown location without inspection by an immigration officer.' },
+      { dir: 'ES\u2192EN', title: 'Declaraci\u00f3n de Asilo', lang: 'es-ES', rate: 0.80, pitch: 0.95, spk: 'Asylum applicant \u2014 earnest, serious',
+        text: 'Solicito asilo en los Estados Unidos porque tengo un temor fundado de persecuci\u00f3n en mi pa\u00eds de origen. He sido amenazado por miembros de una pandilla que exige dinero de extorti\u00f3n a mi familia. La polic\u00eda de mi pa\u00eds no pudo o no quiso protegerme. Si regreso, creo firmemente que ser\u00e9 asesinado.' }
+    ],
+    conse: [
+      { title: 'Asylum Applicant \u2014 Direct Examination', lang: 'en-US', rate: 0.85, pitch: 1.0, spk: "Applicant's attorney \u2014 calm, supportive",
+        text: 'When did you first receive threats from this group? How many times were you threatened? Did you report these threats to local police? What happened when you reported them? Why do you believe the government cannot protect you? When did you make the decision to leave your country?' },
+      { title: 'Government Attorney \u2014 Cross-Examination', lang: 'en-US', rate: 0.87, pitch: 1.05, spk: 'Government attorney \u2014 skeptical, probing',
+        text: "You testified that you were threatened on two occasions. Is that correct? You did not personally witness any violence against members of your family? You entered the United States illegally, without presenting yourself at a port of entry. Why did you not go to the United States Embassy in your country to request asylum through official channels?" }
+    ],
+    sim: [
+      { title: 'Immigration Judge \u2014 Final Ruling', lang: 'en-US', rate: 0.80, pitch: 0.9, spk: 'Immigration judge \u2014 formal, deliberate',
+        text: "The Court has considered the totality of the evidence in this asylum claim. The Court finds the applicant's testimony credible. Country condition reports confirm widespread gang violence and the government's failure to effectively protect civilians. The applicant has established a well-founded fear of persecution. Asylum is hereby granted." }
+    ]
+  },
+  { title: 'Mock Exam 4 \u2014 Felony Trial', ctx: 'Drug trafficking charge. Multiple witnesses, jury instructions, sentencing. Highest difficulty.',
+    sight: [
+      { dir: 'EN\u2192ES', title: 'Plea in Abeyance Agreement', lang: 'en-US', rate: 0.80, pitch: 1.0, spk: 'Defense attorney \u2014 professional',
+        text: 'The parties hereto agree that the defendant shall enter a plea of guilty to the charge of possession of a controlled substance. Said plea shall be held in abeyance for a period of twelve months. If the defendant successfully completes all conditions, including payment of fines and completion of substance abuse treatment, the charge shall be dismissed. Any violation may result in the Court entering judgment on the guilty plea.' },
+      { dir: 'ES\u2192EN', title: 'Testimonio Escrito \u2014 Testigo de la Defensa', lang: 'es-ES', rate: 0.82, pitch: 1.0, spk: 'Defense witness \u2014 formal declaration',
+        text: 'Yo, Rosa El\u00eda Guti\u00e9rrez, declaro bajo protesta de decir verdad que conozco al acusado desde hace diez a\u00f1os. Es una persona trabajadora y de buena reputaci\u00f3n en nuestra comunidad. El d\u00eda de los hechos, el acusado estaba en mi domicilio desde las seis de la tarde hasta aproximadamente las once de la noche.' }
+    ],
+    conse: [
+      { title: 'DEA Agent \u2014 Expert Testimony', lang: 'en-US', rate: 0.83, pitch: 1.0, spk: 'Federal agent \u2014 professional, precise',
+        text: 'I am a special agent with the Drug Enforcement Administration with twelve years of experience. Based on the quantity of the substance recovered, the packaging method, the presence of scales and paraphernalia, and the amount of cash found at the scene, it is my professional opinion that the substance was possessed with the intent to distribute, not for personal use.' },
+      { title: 'Defense Attorney \u2014 Closing Argument', lang: 'en-US', rate: 0.87, pitch: 1.05, spk: 'Defense attorney \u2014 passionate, formal',
+        text: "The government has asked you to convict my client of a serious felony based largely on the opinion of one agent who never met my client before this case. The agent assumes intent based on quantity. But my client has no prior record. No phone records connect him to any distribution. Ladies and gentlemen, reasonable doubt does not require certainty of innocence. It only requires you to doubt the government's case." }
+    ],
+    sim: [
+      { title: 'Judge \u2014 Jury Instructions', lang: 'en-US', rate: 0.77, pitch: 0.88, spk: 'Judge \u2014 slow, deliberate, instructional',
+        text: 'You have now heard all of the evidence in this case. It is now my duty to instruct you on the law. You must follow the law as I explain it to you even if you disagree with it. If the attorneys have stated anything about the law that differs from what I tell you, you must follow my instructions. You must not be influenced by sympathy, prejudice, or passion. Your verdict must be based solely and exclusively on the evidence.' }
+    ]
+  }
+];
+
+
+// ── COURT DOCUMENT BUILDER ────────────────────────────────────
+var DOC_META = [
+  { court: 'Utah Third District Court', case_no: '2024-CR-00891', parties: 'State of Utah v. Marco A. Vargas', judge: 'Hon. M. Patterson', heading: 'ADVISEMENT OF CONSTITUTIONAL RIGHTS', stamp: 'Filed' },
+  { court: 'Utah Third District Court', case_no: '2024-CR-01045', parties: 'State of Utah v. Rosa L. Mendoza', judge: 'Hon. T. Rodriguez', heading: 'PLEA ADVISEMENT', stamp: 'Official' },
+  { court: 'Utah Third District Court', case_no: '2024-CV-00334', parties: 'Petitioner: Ana L. Flores / Respondent: Carlos A. Torres', judge: 'Hon. S. Williams', heading: 'CIVIL PROTECTIVE ORDER', stamp: 'Court Order' },
+  { court: 'Utah Third District Court', case_no: '2024-CR-00712', parties: 'State of Utah v. Diego R. Hernandez', judge: 'Hon. K. Johnson', heading: 'NOTICE OF HEARING', stamp: 'Notice' },
+  { court: 'Utah Third District Court', case_no: '2024-CR-00558', parties: 'State of Utah v. Luis M. Gutierrez', judge: 'Hon. R. Chen', heading: 'WAIVER OF PRELIMINARY HEARING', stamp: 'Signed' },
+  { court: 'Tercer Distrito Judicial de Utah', case_no: '2024-PE-00445', parties: 'Estado de Utah vs. Marco A. Vargas', judge: 'Juez Hon. M. Patterson', heading: 'AVISO DE AUDIENCIA JUDICIAL', stamp: 'Registrado' },
+  { court: 'Tercer Distrito Judicial de Utah', case_no: '2024-PE-00891', parties: 'Estado de Utah vs. José R. Pérez', judge: 'Juez Hon. T. Rodríguez', heading: 'ADVERTENCIA DE DERECHOS CONSTITUCIONALES', stamp: 'Documento' },
+  { court: 'Tercer Distrito Judicial de Utah', case_no: '2024-CF-00223', parties: 'Peticionaria: Ana L. Flores / Demandado: Carlos A. Torres', judge: 'Jueza Hon. S. Williams', heading: 'ORDEN DE PROTECCIÓN CIVIL', stamp: 'Vigente' },
+  { court: 'Tercer Distrito Judicial de Utah', case_no: '2024-PE-00667', parties: 'Estado de Utah vs. Luis M. Gutiérrez', judge: 'Juez Hon. R. Chen', heading: 'RENUNCIA A AUDIENCIA PRELIMINAR', stamp: 'Firmado' },
+  { court: 'Tercer Distrito Judicial de Utah', case_no: '2024-PE-01102', parties: 'Estado de Utah vs. Rosa E. Navarro', judge: 'Juez Hon. K. Johnson', heading: 'DECLARACIÓN DE CULPABILIDAD', stamp: 'Registro' }
+];
+
+function buildCourtDoc(d, idx) {
+  var m = DOC_META[idx] || DOC_META[0];
+  var isSpanish = d.dir === 'ES\u2192EN';
+  var dateStr = isSpanish ? 'Fecha: 14 de mayo de 2024' : 'Date: May 14, 2024';
+  var pageStr = isSpanish ? 'P\u00e1gina 1 de 1' : 'Page 1 of 1';
+  var caseLabel = isSpanish ? 'Causa N\u00ba:' : 'Case No.:';
+  var partiesLabel = isSpanish ? 'Partes:' : 'Parties:';
+  var judgeLabel = isSpanish ? 'Juez/a:' : 'Judge:';
+  var bodyText = d.text.replace(/\n/g, ' ');
+  var sentences = bodyText.split('. ');
+  var bodyHtml = sentences.map(function(s) { return s ? '<p>' + s + (s.slice(-1) !== '.' ? '.' : '') + '</p>' : ''; }).join('');
+  var partiesStr = m.parties ? m.parties.replace(/\n/g, ' / ') : '';
+  return '<div class="court-doc-stamp">' + (m.stamp || 'Filed') + '</div>'
+    + '<div class="court-doc-header">'
+    + '<div class="court-doc-court">' + (m.court || '') + '</div>'
+    + '<div class="court-doc-title">' + (m.heading || '') + '</div>'
+    + '<div class="court-doc-case"><strong>' + caseLabel + '</strong> ' + (m.case_no || '') + '</div>'
+    + '<div class="court-doc-case"><strong>' + partiesLabel + '</strong> ' + partiesStr + '</div>'
+    + '<div class="court-doc-case"><strong>' + judgeLabel + '</strong> ' + (m.judge || '') + '</div>'
+    + '</div>'
+    + '<div class="court-doc-body">' + bodyHtml + '</div>'
+    + '<div class="court-doc-footer"><span>' + dateStr + '</span><span>' + pageStr + '</span></div>';
+}
+
+// ── RENDER HELPERS ──────────────────────────────────────────
+function timerHTML(id, secs) {
+  var m = String(Math.floor(secs/60)).padStart(2,'0');
+  var s = String(secs%60).padStart(2,'0');
+  return '<div class="tbox" id="tb-' + id + '">'
+    + '<div><div class="tlbl">Prep time</div>'
+    + '<div class="tdisp" id="td-' + id + '">' + m + ':' + s + '</div>'
+    + '<div id="tl-' + id + '" style="font-size:11px;color:rgba(255,255,255,.65)">Click Start to begin</div></div>'
+    + '<div style="display:flex;flex-direction:column;gap:6px">'
+    + '<button class="btn btn-p" style="font-size:12px;padding:5px 10px" onclick="startTimer(\'' + id + '\',' + secs + ')">&#9654; Start</button>'
+    + '<button class="btn btn-g" style="font-size:12px;padding:5px 10px" onclick="resetTimer(\'' + id + '\',' + secs + ')">&#8635; Reset</button>'
+    + '</div></div>';
+}
+
+function audioHTML(prefix, dataArr, di, hasSpeed) {
+  var d = dataArr[di];
+  var btnId = 'sp-' + prefix + di;
+  var indId = 'ind-' + prefix + di;
+  var slId = 'sl-' + prefix + di;
+  var svId = 'sv-' + prefix + di;
+  var callStr = 'speak(' + dataArr.name + '[' + di + '].text,' + dataArr.name + '[' + di + '].lang,'
+    + (hasSpeed ? 'document.getElementById(\'' + slId + '\').value' : dataArr[di].rate)
+    + ',' + d.pitch + ',\'' + btnId + '\',\'' + indId + '\')';
+  var h = '<div class="abox"><div class="albl">Audio</div><div class="abtns">'
+    + '<button class="btn btn-p" id="' + btnId + '" onclick="' + callStr + '">&#9654; Play Audio</button>'
+    + '<button class="btn btn-g" onclick="stopAll()">&#9632; Stop</button>';
+  if (d.revealId) {
+    h += '<button class="btn" onclick="toggleBlur(\'' + d.revealId + '\')">&#128065; Show/Hide</button>';
+  }
+  h += '</div><div class="aspk" id="' + indId + '" style="display:none">&#9654; Playing: ' + d.spk + '</div>';
+  if (hasSpeed) {
+    h += '<div class="aspeed"><label>Speed:</label>'
+      + '<input id="' + slId + '" type="range" min="0.5" max="1.1" step="0.05" value="' + d.rate + '" oninput="updateSpeedLabel(\'' + slId + '\',\'' + svId + '\')">'
+      + '<span id="' + svId + '">' + d.rate + '</span></div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+// ── SIGHT TRANSLATION ──────────────────────────────────────
+var curSight = 0;
+function renderSightCard(idx) {
+  var d = SD[idx];
+  var docId = 'doc-s' + idx;
+  d.revealId = docId;
+  var h = '<div class="pc2">'
+    + '<div class="ph"><div class="ptitle">' + d.title + '</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge bn">' + d.dir + '</span><span class="badge bg">' + d.type + '</span>'
+    + '<span style="font-size:12px;color:#6B7280">' + (idx+1) + ' / ' + SD.length + '</span></div></div>'
+    + '<div class="ib am"><strong>How to use:</strong> Start prep timer, scan the document, then click Play Audio. Render it orally in ' + (d.dir === 'EN\u2192ES' ? 'Spanish' : 'English') + ' aloud.</div>'
+    + timerHTML('s' + idx, 60)
+    + audioHTML('s', { name: 'SD', length: SD.length, 0: SD[0], 1: SD[1], 2: SD[2], 3: SD[3], 4: SD[4], 5: SD[5], 6: SD[6], 7: SD[7], 8: SD[8], 9: SD[9], revealId: docId }, idx, true);
+  // fix the audio call to use SD directly
+  h = h.replace(/speak\(undefined\.name/g, 'speak(SD');
+  var btnId = 'sp-s' + idx;
+  var indId = 'ind-s' + idx;
+  var slId = 'sl-s' + idx;
+  var svId = 'sv-s' + idx;
+  h = '<div class="pc2">'
+    + '<div class="ph"><div class="ptitle">' + d.title + '</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge bn">' + d.dir + '</span><span class="badge bg">' + d.type + '</span>'
+    + '<span style="font-size:12px;color:#6B7280">' + (idx+1) + ' / ' + SD.length + '</span></div></div>'
+    + '<div class="ib am"><strong>How to use:</strong> Start prep timer, scan the document, then click Play Audio. Render it orally in ' + (d.dir === 'EN\u2192ES' ? 'Spanish' : 'English') + ' aloud.</div>'
+    + timerHTML('s' + idx, 60)
+    + '<div class="abox"><div class="albl">Document Audio</div><div class="abtns">'
+    + '<button class="btn btn-p" id="' + btnId + '" onclick="speak(SD[' + idx + '].text,SD[' + idx + '].lang,document.getElementById(\'' + slId + '\').value,SD[' + idx + '].pitch,\'' + btnId + '\',\'' + indId + '\')">&#9654; Play Audio</button>'
+    + '<button class="btn btn-g" onclick="stopAll()">&#9632; Stop</button>'
+    + '<button class="btn" onclick="toggleBlur(\'' + docId + '\')">&#128065; Show/Hide Text</button>'
+    + '</div><div class="aspk" id="' + indId + '" style="display:none">&#9654; Playing: ' + d.spk + '</div>'
+    + '<div class="aspeed"><label>Speed:</label><input id="' + slId + '" type="range" min="0.5" max="1.1" step="0.05" value="' + d.rate + '" oninput="updateSpeedLabel(\'' + slId + '\',\'' + svId + '\')"><span id="' + svId + '">' + d.rate + '</span></div></div>'
+    + '<div class="sight-doc-panel">'
+    + '<div class="sight-doc-label">&#128196; Document to Sight Translate</div>'
+    + '<button class="sight-reveal-btn" onclick="toggleBlur(\'' + docId + '\')">&#128065; Reveal / Hide Document</button>'
+    + '<div class="court-doc blur" id="' + docId + '">' + buildCourtDoc(d, idx) + '</div>'
+    + '</div>'
+    + '<div style="margin-top:1rem"><div style="font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.4rem">Your notes</div>'
+    + '<textarea class="notes" placeholder="Write notes on challenging terms, register decisions, or areas to improve..."></textarea></div>'
+    + '<div class="ib gr" style="margin-top:.75rem"><strong>Coaching:</strong> ' + d.tip + '</div>'
+    + '<div class="brow"><button class="btn btn-p" onclick="switchSight(' + ((idx + 1) % SD.length) + ')">Next exercise &rarr;</button></div>'
+    + '<div class="pbar"><div class="pfill" style="width:' + Math.round((idx + 1) / SD.length * 100) + '%"></div></div>'
+    + '</div>';
+  document.getElementById('sight-content').innerHTML = h;
+}
+
+function switchSight(idx) {
+  curSight = idx;
+  document.querySelectorAll('#sight-tabs .itab').forEach(function(b, i) { b.classList.toggle('on', i === idx); });
+  renderSightCard(idx);
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ── CONSECUTIVE ────────────────────────────────────────────
+var curConse = 0;
+function renderConseCard(idx) {
+  var d = CD[idx];
+  var docId = 'doc-c' + idx;
+  var btnId = 'sp-c' + idx;
+  var indId = 'ind-c' + idx;
+  var slId = 'sl-c' + idx;
+  var svId = 'sv-c' + idx;
+  var h = '<div class="pc2">'
+    + '<div class="ph"><div class="ptitle">' + d.title + '</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge bn">EN&rarr;ES</span><span class="badge bg">' + d.type + '</span>'
+    + '<span style="font-size:12px;color:#6B7280">' + (idx+1) + ' / ' + CD.length + '</span></div></div>'
+    + '<div class="ib am"><strong>How to use:</strong> Listen to the full segment. Take notes. When audio ends, deliver your consecutive rendition in Spanish aloud.</div>'
+    + '<div class="abox"><div class="albl">Source Audio &mdash; Listen &amp; Take Notes</div><div class="abtns">'
+    + '<button class="btn btn-p" id="' + btnId + '" onclick="speak(CD[' + idx + '].text,CD[' + idx + '].lang,document.getElementById(\'' + slId + '\').value,CD[' + idx + '].pitch,\'' + btnId + '\',\'' + indId + '\')">&#9654; Play Audio</button>'
+    + '<button class="btn btn-g" onclick="stopAll()">&#9632; Stop</button>'
+    + '</div><div class="aspk" id="' + indId + '" style="display:none">&#9654; Playing: ' + d.spk + '</div>'
+    + '<div class="aspeed"><label>Speed:</label><input id="' + slId + '" type="range" min="0.6" max="1.1" step="0.05" value="' + d.rate + '" oninput="updateSpeedLabel(\'' + slId + '\',\'' + svId + '\')"><span id="' + svId + '">' + d.rate + '</span></div></div>'
+    + '<div style="margin:.75rem 0"><div style="font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.4rem">&#128221; Note-taking area</div>'
+    + '<textarea class="notes" style="min-height:140px;font-family:monospace;font-size:13px" placeholder="Take consecutive notes here using your symbol system...&#10;Remember: vertical structure &middot; key verbs &middot; ALL numbers in full &middot; proper names complete"></textarea></div>'
+    + '<div><div style="font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.4rem">Self-evaluation checklist</div>'
+    + '<ul class="chk"><li><input type="checkbox"> I waited for the speaker to finish before interpreting</li>'
+    + '<li><input type="checkbox"> I preserved all numbers, dates, and proper names accurately</li>'
+    + '<li><input type="checkbox"> I maintained the speaker\'s register (formal/informal/emotional)</li>'
+    + '<li><input type="checkbox"> No omissions or additions in my rendition</li>'
+    + '<li><input type="checkbox"> My rendition was fluent and at a natural pace</li></ul></div>'
+    + '<div style="margin-top:1rem"><button class="btn" onclick="toggleBlur(\'' + docId + '\')">&#128065; Reveal source script (compare after)</button></div>'
+    + '<div class="doc blur" id="' + docId + '" style="margin-top:.75rem">' + d.text + '</div>'
+    + '<div class="ib gr" style="margin-top:.75rem"><strong>Coaching:</strong> ' + d.tip + '</div>'
+    + '<div class="brow"><button class="btn btn-p" onclick="switchConse(' + ((idx + 1) % CD.length) + ')">Next exercise &rarr;</button></div>'
+    + '<div class="pbar"><div class="pfill" style="width:' + Math.round((idx + 1) / CD.length * 100) + '%"></div></div>'
+    + '</div>';
+  document.getElementById('conse-content').innerHTML = h;
+}
+
+function switchConse(idx) {
+  curConse = idx;
+  document.querySelectorAll('#conse-tabs .itab').forEach(function(b, i) { b.classList.toggle('on', i === idx); });
+  renderConseCard(idx);
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ── SIMULTANEOUS ───────────────────────────────────────────
+var curSim = 0;
+function renderSimCard(idx) {
+  var d = SIMD[idx];
+  var docId = 'doc-si' + idx;
+  var btnId = 'sp-si' + idx;
+  var indId = 'ind-si' + idx;
+  var slId = 'sl-si' + idx;
+  var svId = 'sv-si' + idx;
+  var h = '<div class="pc2">'
+    + '<div class="ph"><div class="ptitle">' + d.title + '</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge bn">EN&rarr;ES Simultaneous</span><span class="badge bg">' + d.type + '</span>'
+    + '<span style="font-size:12px;color:#6B7280">' + (idx+1) + ' / ' + SIMD.length + '</span></div></div>'
+    + '<div class="ib am"><strong>How to use:</strong> Press Play, then immediately begin your whispered simultaneous interpretation. Stay 3&ndash;5 seconds behind. Do not stop.</div>'
+    + '<div class="abox"><div class="albl">Courtroom Audio &mdash; Interpret simultaneously as you listen</div><div class="abtns">'
+    + '<button class="btn btn-p" id="' + btnId + '" onclick="speak(SIMD[' + idx + '].text,SIMD[' + idx + '].lang,document.getElementById(\'' + slId + '\').value,SIMD[' + idx + '].pitch,\'' + btnId + '\',\'' + indId + '\')">&#9654; Play &amp; Interpret</button>'
+    + '<button class="btn btn-g" onclick="stopAll()">&#9632; Stop</button>'
+    + '<button class="btn" onclick="toggleBlur(\'' + docId + '\')">&#128065; Show/Hide Script</button>'
+    + '</div><div class="aspk" id="' + indId + '" style="display:none">&#9654; Playing: ' + d.spk + '</div>'
+    + '<div class="aspeed"><label>Speed:</label><input id="' + slId + '" type="range" min="0.6" max="1.1" step="0.05" value="' + d.rate + '" oninput="updateSpeedLabel(\'' + slId + '\',\'' + svId + '\')"><span id="' + svId + '">' + d.rate + '</span></div></div>'
+    + '<div class="doc blur" id="' + docId + '">' + d.text + '</div>'
+    + '<div style="margin:.75rem 0"><div style="font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.4rem">Self-evaluation checklist</div>'
+    + '<ul class="chk"><li><input type="checkbox"> I maintained a consistent ear-voice span (3&ndash;5 seconds)</li>'
+    + '<li><input type="checkbox"> I did not fall significantly behind or stop</li>'
+    + '<li><input type="checkbox"> I compressed without losing key legal content</li>'
+    + '<li><input type="checkbox"> My delivery was clear at whisper volume (chuchotage)</li>'
+    + '<li><input type="checkbox"> All numbers, names, and legal terms rendered accurately</li></ul></div>'
+    + '<div style="margin:.75rem 0"><div style="font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:.4rem">Practice notes</div>'
+    + '<textarea class="notes" placeholder="Note any terms you missed or want to review..."></textarea></div>'
+    + '<div class="ib gr"><strong>Coaching:</strong> ' + d.tip + '</div>'
+    + '<div class="brow"><button class="btn btn-p" onclick="switchSim(' + ((idx + 1) % SIMD.length) + ')">Next exercise &rarr;</button></div>'
+    + '<div class="pbar"><div class="pfill" style="width:' + Math.round((idx + 1) / SIMD.length * 100) + '%"></div></div>'
+    + '</div>';
+  document.getElementById('sim-content').innerHTML = h;
+}
+
+function switchSim(idx) {
+  curSim = idx;
+  document.querySelectorAll('#sim-tabs .itab').forEach(function(b, i) { b.classList.toggle('on', i === idx); });
+  renderSimCard(idx);
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ── MOCK EXAMS ─────────────────────────────────────────────
+var curMockIdx = 0;
+function switchMock(idx) {
+  curMockIdx = idx;
+  document.querySelectorAll('#mock-tabs .itab').forEach(function(b, i) { b.classList.toggle('on', i === idx); });
+  renderMockExam(idx);
+}
+
+function renderMockExam(idx) {
+  var ex = MOCKS[idx];
+  var h = '<div class="card" style="border-top:3px solid #00263A">'
+    + '<div class="ct"><div class="ci">📋</div>' + ex.title + '</div>'
+    + '<p style="font-size:13.5px;color:#6B7280;margin-bottom:1rem">' + ex.ctx + '</p>'
+    + '<div class="ib am">Complete all three parts in order. Use the checklist after each part. 70%+ on each part = passing.</div></div>';
+
+  // Part 1 — Sight
+  h += '<div class="estage"><div class="esh"><div class="enum">1</div><div class="ename">Part 1 &mdash; Sight Translation</div><div class="etime">~15 minutes</div></div>';
+  ex.sight.forEach(function(doc, di) {
+    var mid = 'm' + idx + 's' + di;
+    var bId = 'sp-' + mid;
+    var iId = 'ind-' + mid;
+    var dId = 'doc-' + mid;
+    h += '<div style="background:#F3F4F6;border-radius:10px;padding:1rem;margin-bottom:.75rem">'
+      + '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
+      + '<strong style="font-size:14px;color:#00263A">' + doc.dir + ' &mdash; ' + doc.title + '</strong>'
+      + '<span class="badge bg">' + doc.dir + '</span></div>'
+      + '<div class="tbox" id="tb-' + mid + '" style="margin-bottom:.75rem">'
+      + '<div><div class="tlbl">Prep time</div><div class="tdisp" id="td-' + mid + '">01:00</div>'
+      + '<div id="tl-' + mid + '" style="font-size:11px;color:rgba(255,255,255,.65)">Click Start</div></div>'
+      + '<button class="btn btn-p" style="font-size:12px;padding:5px 10px" onclick="startTimer(\'' + mid + '\',60)">&#9654; Start</button></div>'
+      + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">'
+      + '<button class="btn btn-p" id="' + bId + '" onclick="speak(MOCKS[' + idx + '].sight[' + di + '].text,MOCKS[' + idx + '].sight[' + di + '].lang,MOCKS[' + idx + '].sight[' + di + '].rate,MOCKS[' + idx + '].sight[' + di + '].pitch,\'' + bId + '\',\'' + iId + '\')" style="font-size:13px">&#9654; Play Audio</button>'
+      + '<button class="btn btn-g" onclick="stopAll()" style="font-size:13px">&#9632; Stop</button>'
+      + '<button class="btn" onclick="toggleBlur(\'' + dId + '\')" style="font-size:13px">&#128065; Show/Hide</button></div>'
+      + '<div class="aspk" id="' + iId + '" style="display:none">&#9654; Playing: ' + doc.spk + '</div>'
+      + '<div class="doc blur" id="' + dId + '" style="margin-top:.6rem;font-size:13px">' + doc.text + '</div></div>';
+  });
+  h += '<div style="margin-top:.75rem"><strong style="font-size:13px;color:#00263A">Part 1 Self-Evaluation</strong>'
+    + '<ul class="chk" style="margin-top:.5rem">'
+    + '<li><input type="checkbox"> EN&rarr;ES: preserved all content without omissions</li>'
+    + '<li><input type="checkbox"> ES&rarr;EN: register maintained throughout</li>'
+    + '<li><input type="checkbox"> All legal terms rendered accurately in both directions</li>'
+    + '<li><input type="checkbox"> No added explanations or simplifications</li></ul></div></div>';
+
+  // Part 2 — Consecutive
+  h += '<div class="estage"><div class="esh"><div class="enum">2</div><div class="ename">Part 2 &mdash; Consecutive Interpretation</div><div class="etime">~20 minutes</div></div>';
+  ex.conse.forEach(function(seg, ci) {
+    var mid = 'm' + idx + 'c' + ci;
+    var bId = 'sp-' + mid;
+    var iId = 'ind-' + mid;
+    var dId = 'doc-' + mid;
+    h += '<div style="background:#F3F4F6;border-radius:10px;padding:1rem;margin-bottom:.75rem">'
+      + '<div style="font-weight:600;font-size:14px;color:#00263A;margin-bottom:.3rem">' + seg.title + '</div>'
+      + '<div style="font-size:12px;font-style:italic;color:#6B7280;margin-bottom:.6rem">' + seg.spk + '</div>'
+      + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">'
+      + '<button class="btn btn-p" id="' + bId + '" onclick="speak(MOCKS[' + idx + '].conse[' + ci + '].text,MOCKS[' + idx + '].conse[' + ci + '].lang,MOCKS[' + idx + '].conse[' + ci + '].rate,MOCKS[' + idx + '].conse[' + ci + '].pitch,\'' + bId + '\',\'' + iId + '\')" style="font-size:13px">&#9654; Play Audio</button>'
+      + '<button class="btn btn-g" onclick="stopAll()" style="font-size:13px">&#9632; Stop</button>'
+      + '<button class="btn" onclick="toggleBlur(\'' + dId + '\')" style="font-size:13px">&#128065; Show Script</button></div>'
+      + '<div class="aspk" id="' + iId + '" style="display:none">&#9654; Playing: ' + seg.spk + '</div>'
+      + '<textarea class="notes" style="min-height:80px;font-family:monospace;font-size:13px;margin-top:.6rem" placeholder="Note-taking area..."></textarea>'
+      + '<div class="doc blur" id="' + dId + '" style="margin-top:.5rem;font-size:13px">' + seg.text + '</div></div>';
+  });
+  h += '<div style="margin-top:.75rem"><strong style="font-size:13px;color:#00263A">Part 2 Self-Evaluation</strong>'
+    + '<ul class="chk" style="margin-top:.5rem">'
+    + '<li><input type="checkbox"> I waited for the full utterance before interpreting</li>'
+    + '<li><input type="checkbox"> My notes captured all key info including numbers and names</li>'
+    + '<li><input type="checkbox"> I preserved the register of each speaker accurately</li>'
+    + '<li><input type="checkbox"> No omissions or additions in my renditions</li></ul></div></div>';
+
+  // Part 3 — Simultaneous
+  h += '<div class="estage"><div class="esh"><div class="enum">3</div><div class="ename">Part 3 &mdash; Simultaneous Interpretation</div><div class="etime">~15 minutes</div></div>';
+  ex.sim.forEach(function(seg, si) {
+    var mid = 'm' + idx + 'si' + si;
+    var bId = 'sp-' + mid;
+    var iId = 'ind-' + mid;
+    var dId = 'doc-' + mid;
+    h += '<div style="background:#F3F4F6;border-radius:10px;padding:1rem;margin-bottom:.75rem">'
+      + '<div style="font-weight:600;font-size:14px;color:#00263A;margin-bottom:.3rem">' + seg.title + '</div>'
+      + '<div style="font-size:12px;font-style:italic;color:#6B7280;margin-bottom:.4rem">' + seg.spk + '</div>'
+      + '<div class="ib am" style="margin-bottom:.6rem;font-size:12px">Press Play and immediately begin your whispered interpretation. Do not pause.</div>'
+      + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem">'
+      + '<button class="btn btn-p" id="' + bId + '" onclick="speak(MOCKS[' + idx + '].sim[' + si + '].text,MOCKS[' + idx + '].sim[' + si + '].lang,MOCKS[' + idx + '].sim[' + si + '].rate,MOCKS[' + idx + '].sim[' + si + '].pitch,\'' + bId + '\',\'' + iId + '\')" style="font-size:13px">&#9654; Play &amp; Interpret</button>'
+      + '<button class="btn btn-g" onclick="stopAll()" style="font-size:13px">&#9632; Stop</button>'
+      + '<button class="btn" onclick="toggleBlur(\'' + dId + '\')" style="font-size:13px">&#128065; Show Script</button></div>'
+      + '<div class="aspk" id="' + iId + '" style="display:none">&#9654; Playing: ' + seg.spk + '</div>'
+      + '<div class="doc blur" id="' + dId + '" style="margin-top:.6rem;font-size:13px">' + seg.text + '</div></div>';
+  });
+  h += '<div style="margin-top:.75rem"><strong style="font-size:13px;color:#00263A">Part 3 Self-Evaluation</strong>'
+    + '<ul class="chk" style="margin-top:.5rem">'
+    + '<li><input type="checkbox"> I maintained consistent ear-voice span throughout</li>'
+    + '<li><input type="checkbox"> I did not stop or drop out at any point</li>'
+    + '<li><input type="checkbox"> All legal terms and numbers rendered accurately</li>'
+    + '<li><input type="checkbox"> My delivery was clear at whisper volume</li></ul></div></div>';
+
+  // Score card
+  h += '<div class="card" style="border-top:3px solid #6B7280;margin-top:1rem">'
+    + '<div class="ct"><div class="ci">📊</div>Mock Exam ' + (idx + 1) + ' &mdash; Overall Self-Assessment</div>'
+    + '<table class="stbl"><thead><tr><th>Part</th><th>Estimated score</th><th>Notes</th></tr></thead><tbody>'
+    + '<tr><td><strong>1 &mdash; Sight Translation</strong></td>'
+    + '<td><input type="text" placeholder="/100" style="width:70px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:13px"></td>'
+    + '<td><input type="text" placeholder="Key observations..." style="width:220px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:12px"></td></tr>'
+    + '<tr><td><strong>2 &mdash; Consecutive</strong></td>'
+    + '<td><input type="text" placeholder="/100" style="width:70px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:13px"></td>'
+    + '<td><input type="text" placeholder="Key observations..." style="width:220px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:12px"></td></tr>'
+    + '<tr><td><strong>3 &mdash; Simultaneous</strong></td>'
+    + '<td><input type="text" placeholder="/100" style="width:70px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:13px"></td>'
+    + '<td><input type="text" placeholder="Key observations..." style="width:220px;border:1px solid #D1D5DB;border-radius:5px;padding:3px 6px;font-size:12px"></td></tr>'
+    + '</tbody></table>'
+    + '<div class="ib" style="margin-top:.75rem">All three parts must reach <strong>70% or above independently</strong> to pass the actual OPE. There is no averaging across parts.</div></div>';
+
+  document.getElementById('mock-content').innerHTML = h;
+
+  // init timers after DOM is updated
+  ex.sight.forEach(function(_, di) {
+    setTimeout(function() { resetTimer('m' + idx + 's' + di, 60); }, 50);
+  });
+}
+
+// ── BUILD ALL TABS & INITIAL RENDER ────────────────────────
+(function init() {
+  // Sight tabs
+  var st = document.getElementById('sight-tabs');
+  SD.forEach(function(d, i) {
+    var b = document.createElement('button');
+    b.className = 'itab' + (i === 0 ? ' on' : '');
+    b.textContent = d.dir + ' \u00b7 ' + d.title;
+    b.addEventListener('click', function() { switchSight(i); });
+    st.appendChild(b);
+  });
+  renderSightCard(0);
+
+  // Consecutive tabs
+  var ct = document.getElementById('conse-tabs');
+  CD.forEach(function(d, i) {
+    var b = document.createElement('button');
+    b.className = 'itab' + (i === 0 ? ' on' : '');
+    b.textContent = 'C' + (i + 1) + ' \u00b7 ' + d.title.split('\u2014')[0].trim();
+    b.addEventListener('click', function() { switchConse(i); });
+    ct.appendChild(b);
+  });
+  renderConseCard(0);
+
+  // Simultaneous tabs
+  var simt = document.getElementById('sim-tabs');
+  SIMD.forEach(function(d, i) {
+    var b = document.createElement('button');
+    b.className = 'itab' + (i === 0 ? ' on' : '');
+    b.textContent = 'SI' + (i + 1) + ' \u00b7 ' + d.title.split('\u2014')[0].trim();
+    b.addEventListener('click', function() { switchSim(i); });
+    simt.appendChild(b);
+  });
+  renderSimCard(0);
+
+  // Mock tabs
+  var mt = document.getElementById('mock-tabs');
+  MOCKS.forEach(function(ex, i) {
+    var b = document.createElement('button');
+    b.className = 'itab' + (i === 0 ? ' on' : '');
+    b.textContent = 'Exam ' + (i + 1) + ' \u2014 ' + ex.title.split('\u2014')[1].trim();
+    b.addEventListener('click', function() { switchMock(i); });
+    mt.appendChild(b);
+  });
+  renderMockExam(0);
+})();
+</script>
+</body>
+</html>
